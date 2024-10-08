@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casio fx-991MS Calculator</title>
+    <style>
+        body {
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #11ffee00;
+        }
+        .calculator {
+            width: 300px;
+            padding: 20px;
+            background-color: rgb(17, 255, 243);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+        }
+        .display {
+            width: 100%;
+            height: 50px;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            font-size: 22px;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .buttons input[type='button'] {
+            width: 100%;
+            height: 40px;
+            background: #888888;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .buttons input[type='button']:hover {
+            background: #555555;
+        }
+        .buttons .wide-button {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" class="display" readonly>
+        <div class="buttons">
+            <input type="button" value="AC" onclick="clearDisplay()">
+            <input type="button" value="DEL" onclick="deleteLast()">
+            <input type="button" value="%" onclick="appendOperator('%')">
+            <input type="button" value="/" onclick="appendOperator('/')">
+            <input type="button" value="7" onclick="appendNumber('7')">
+            <input type="button" value="8" onclick="appendNumber('8')">
+            <input type="button" value="9" onclick="appendNumber('9')">
+            <input type="button" value="" onclick="appendOperator('')">
+            <input type="button" value="4" onclick="appendNumber('4')">
+            <input type="button" value="5" onclick="appendNumber('5')">
+            <input type="button" value="6" onclick="appendNumber('6')">
+            <input type="button" value="-" onclick="appendOperator('-')">
+            <input type="button" value="1" onclick="appendNumber('1')">
+            <input type="button" value="2" onclick="appendNumber('2')">
+            <input type="button" value="3" onclick="appendNumber('3')">
+            <input type="button" value="+" onclick="appendOperator('+')">
+            <input type="button" value="0" onclick="appendNumber('0')">
+            <input type="button" value="." onclick="appendNumber('.')">
+            <input type="button" value="=" onclick="calculateResult()">
+            <input type="button" value="Ans" onclick="useAns()">
+            <input type="button" value="sin" onclick="calculateTrig('sin')">
+            <input type="button" value="cos" onclick="calculateTrig('cos')">
+            <input type="button" value="tan" onclick="calculateTrig('tan')">
+            <input type="button" value="√" onclick="squareRoot()">
+            <input type="button" value="x^2" onclick="square()">
+            <input type="button" value="log" onclick="calculateLog()">
+            <input type="button" value="ln" onclick="calculateLn()">
+            <input type="button" value="EXP" onclick="appendOperator('**')">
+        </div>
+    </div>
+
+    <script>
+        let ans = 0;
+
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+        }
+
+        function deleteLast() {
+            let display = document.getElementById("display");
+            display.value = display.value.slice(0, -1);
+        }
+
+        function appendNumber(number) {
+            document.getElementById("display").value += number;
+        }
+
+        function appendOperator(operator) {
+            document.getElementById("display").value += " " + operator + " ";
+        }
+
+        function calculateResult() {
+            let display = document.getElementById("display");
+            try {
+                ans = eval(display.value);
+                display.value = ans;
+            } catch (error) {
+                display.value = "Error";
+            }
+        }
+
+        function calculateTrig(func) {
+            let display = document.getElementById("display");
+            let radians = parseFloat(display.value) * (Math.PI / 180);
+            display.value = Math[func](radians);
+        }
+
+        function squareRoot() {
+            let display = document.getElementById("display");
+            display.value = Math.sqrt(parseFloat(display.value));
+        }
+
+        function square() {
+            let display = document.getElementById("display");
+            display.value = Math.pow(parseFloat(display.value), 2);
+        }
+
+        function calculateLog() {
+            let display = document.getElementById("display");
+            display.value = Math.log10(parseFloat(display.value));
+        }
+
+        function calculateLn() {
+            let display = document.getElementById("display");
+            display.value = Math.log(parseFloat(display.value));
+        }
+
+        function useAns() {
+            document.getElementById("display").value += ans;
+        }
+    </script>
+</body>
+</html>
